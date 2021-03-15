@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Robson_Totvs_Test.Configuration;
+using Robson_Totvs_Test.Configuration.TokenService;
 using Robson_Totvs_Test.Data;
 using Robson_Totvs_Test.Domain.Entities;
 
@@ -26,7 +27,6 @@ namespace Robson_Totvs_Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -36,6 +36,13 @@ namespace Robson_Totvs_Test
             ConfigureDatabase(services);
             ConfigureHttpPostNameToLowerCase(services);
             services.ConfigureJwtAuthentication(this.Configuration);
+
+            ConfigureDependencyInjections(services);
+        }
+
+        private void ConfigureDependencyInjections(IServiceCollection services)
+        {
+            services.AddScoped<ITotvsTokenService, TotvsTokenService>();
         }
 
         private void ConfigureHttpPostNameToLowerCase(IServiceCollection services)
@@ -61,7 +68,7 @@ namespace Robson_Totvs_Test
                 options.UseNpgsql(this.Configuration.GetConnectionString("TotvsConnection"))
                      .UseLowerCaseNamingConvention();
             });
-            
+
             services.AddDefaultIdentity<Account>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;

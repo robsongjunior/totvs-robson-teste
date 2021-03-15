@@ -2,37 +2,43 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Robson_Totvs_Test.Application.DTO.Models.Request;
+using Robson_Totvs_Test.Configuration.TokenService;
 using Robson_Totvs_Test.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Robson_Totvs_Test.Controllers
 {
-    [Authorize]
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
         UserManager<Account> _userManager;
         SignInManager<Account> _signInManager;
+        ITotvsTokenService _tokenService;
+
         public AuthController(
             UserManager<Account> userManager,
-            SignInManager<Account> signInManager)
+            SignInManager<Account> signInManager,
+            ITotvsTokenService tokenService)
         {
             this._userManager = userManager;
+            this._tokenService = tokenService;
+            this._signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Login(CreateLoginRequestDTO request)
+        [HttpPost("/auth/login")]
+        public async Task<IActionResult> Login([FromBody] CreateLoginRequestDTO request)
         {
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser == null)
                 return NotFound($"User not found with the requested email: {request.Email}");
 
-            var result = await _signInManager.PasswordSignInAsync(existingUser, request.Password, false, false);
+            var loginSuccessResult = await _signInManager.PasswordSignInAsync(existingUser, request.Password, false, false);
+            if (loginSuccessResult.Succeeded == false)
+                return Unauthorized("Invalid username/password");
 
+            var myToken = await _tokenService.GenerateTokenAsync(existingUser.UserName);
 
-            return Ok();
+            return Ok(myToken);
         }
     }
 }
