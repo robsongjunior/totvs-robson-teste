@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Robson_Totvs_Test.Enumerations
+﻿namespace Robson_Totvs_Test.Enumerations
 {
-    public enum ProfileType
+    public enum ProfileType : int
     {
-        Doctor,
-        Patient,
-        Employee
+        Doctor = 0,
+        Patient = 1,
+        Employee = 2
     }
 }
