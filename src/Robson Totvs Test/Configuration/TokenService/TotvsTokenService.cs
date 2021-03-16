@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Robson_Totvs_Test.Domain.Entities;
+using Robson_Totvs_Test.Domain.Interfaces.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -24,6 +25,8 @@ namespace Robson_Totvs_Test.Configuration.TokenService
 
         public async Task<string> GenerateTokenAsync(string username)
         {
+            if (username == null) throw new ArgumentNullException("Username can not be null");
+
             var myUser = await _userManager.FindByNameAsync(username);
 
             var tokenHandler = new JwtSecurityTokenHandler();

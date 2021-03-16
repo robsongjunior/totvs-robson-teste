@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Robson_Totvs_Test.Application.DTO.Models.Common;
-using Robson_Totvs_Test.Application.DTO.Models.Request;
 using Robson_Totvs_Test.Application.DTO.Models.Response;
-using Robson_Totvs_Test.Data.Repositories;
 using Robson_Totvs_Test.Domain.Entities;
+using Robson_Totvs_Test.Domain.Interfaces.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;

@@ -13,6 +13,8 @@ using Robson_Totvs_Test.Configuration.TokenService;
 using Robson_Totvs_Test.Data;
 using Robson_Totvs_Test.Data.Repositories;
 using Robson_Totvs_Test.Domain.Entities;
+using Robson_Totvs_Test.Domain.Interfaces.Repositories;
+using Robson_Totvs_Test.Domain.Interfaces.Services;
 
 namespace Robson_Totvs_Test
 {

@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Robson_Totvs_Test.Application.DTO.Models.Request;
 using Robson_Totvs_Test.Application.DTO.Models.Response;
-using Robson_Totvs_Test.Configuration.TokenService;
 using Robson_Totvs_Test.Domain.Entities;
+using Robson_Totvs_Test.Domain.Interfaces.Services;
 using System.Net;
 using System.Threading.Tasks;
 

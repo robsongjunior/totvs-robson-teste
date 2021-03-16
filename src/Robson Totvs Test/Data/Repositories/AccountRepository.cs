@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
-using Robson_Totvs_Test.Application.DTO.Models.Request;
 using Robson_Totvs_Test.Domain.Entities;
+using Robson_Totvs_Test.Domain.Interfaces.Repositories;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
