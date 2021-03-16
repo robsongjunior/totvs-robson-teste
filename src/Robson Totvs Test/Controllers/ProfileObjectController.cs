@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Robson_Totvs_Test.Application.DTO.Models.Common;
 using Robson_Totvs_Test.Application.DTO.Models.Response;
 using Robson_Totvs_Test.Domain.Entities;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Robson_Totvs_Test.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class ProfileObjectController : ControllerBase
     {
