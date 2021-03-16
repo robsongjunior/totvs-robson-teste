@@ -1,5 +1,6 @@
 ﻿using DataAnnotationsExtensions;
 using Newtonsoft.Json;
+using Robson_Totvs_Test.Application.DTO.Models.Common;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Robson_Totvs_Test.Application.DTO.Models.Request
 
         [Required]
         [JsonProperty("profiles")]
-        public CreateObjectProfileRequestDTO[] Profiles { get; set; }
+        public ProfileObjectDTO[] Profiles { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

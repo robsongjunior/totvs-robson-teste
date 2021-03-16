@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Robson_Totvs_Test.Application.DTO.Models.Common;
 using Robson_Totvs_Test.Application.DTO.Models.Request;
+using Robson_Totvs_Test.Application.DTO.Models.Response;
 using Robson_Totvs_Test.Data.Repositories;
 using Robson_Totvs_Test.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +26,7 @@ namespace Robson_Totvs_Test.Controllers
         }
 
         [HttpPost("/account/{userId}/profile-object")]
-        public async Task<IActionResult> RegisterProfile([FromRoute][Required] string userId, [FromBody][Required] CreateObjectProfileRequestDTO request)
+        public async Task<IActionResult> RegisterProfile([FromRoute][Required] string userId, [FromBody][Required] ProfileObjectDTO request)
         {
             if (ModelState.IsValid == false)
             {
@@ -35,11 +37,15 @@ namespace Robson_Totvs_Test.Controllers
 
             if (user == null)
             {
-                return NotFound("User not found with the resquested id");
+                return StatusCode(
+                    statusCode: (int)HttpStatusCode.NotFound,
+                    value: new GetErrorResponseDTO(HttpStatusCode.NotFound, "User not found with the resquested id."));
             }
             else if(user.Profiles.Any(x=>x.Type == request.Type))
             {
-                return BadRequest("Profile type must be unique");
+                return StatusCode(
+                    statusCode: (int)HttpStatusCode.BadRequest,
+                    value: new GetErrorResponseDTO(HttpStatusCode.BadRequest, "Profile type must be unique"));
             }
 
             var myNewProfile = new ProfileObject(request.Type, user.Id);
@@ -48,7 +54,9 @@ namespace Robson_Totvs_Test.Controllers
 
             if (success == false)
             {
-                return Problem(statusCode: (int)HttpStatusCode.InternalServerError, detail: "Error while saving profile-object on database");
+                return StatusCode(
+                    statusCode: (int)HttpStatusCode.InternalServerError,
+                    value: new GetErrorResponseDTO(HttpStatusCode.InternalServerError, "Error while saving profile-object on database"));
             }
 
             return Ok(myNewProfile);

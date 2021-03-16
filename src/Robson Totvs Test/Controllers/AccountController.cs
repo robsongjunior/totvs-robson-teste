@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Robson_Totvs_Test.Application.DTO.Models.Common;
 using Robson_Totvs_Test.Application.DTO.Models.Request;
+using Robson_Totvs_Test.Application.DTO.Models.Response;
+using Robson_Totvs_Test.Configuration.TokenService;
 using Robson_Totvs_Test.Data.Repositories;
 using Robson_Totvs_Test.Domain.Entities;
 using Robson_Totvs_Test.Filters;
@@ -18,14 +21,17 @@ namespace Robson_Totvs_Test.Controllers
     {
         UserManager<Account> _userManager;
         IAccountRepository _accountRepository;
+        ITotvsTokenService _tokenService;
 
         public AccountController(
+            ITotvsTokenService tokenService,
             IAccountRepository accountRepository,
             UserManager<Account> userManager,
             SignInManager<Account> signInManager)
         {
             this._userManager = userManager;
             this._accountRepository = accountRepository;
+            this._tokenService = tokenService;
         }
 
         [HttpPost]
@@ -38,24 +44,38 @@ namespace Robson_Totvs_Test.Controllers
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
 
             if (existingUser != null)
-                return BadRequest("Email já existe.");
+                return StatusCode(
+                    statusCode: (int)HttpStatusCode.BadRequest,
+                    value: new GetErrorResponseDTO(HttpStatusCode.BadRequest, "Email já existe."));
 
             var myProfiles = request.Profiles.Select(x => new ProfileObject(x.Type, null)).ToList();
             var myNewAccount = new Account(request.Name, request.Email, myProfiles);
 
-            var result = await this._userManager.CreateAsync(myNewAccount, request.Password);
+            var createAccountResult = await this._userManager.CreateAsync(myNewAccount, request.Password);
 
-            if (result.Succeeded == false)
+            if (createAccountResult.Succeeded == false)
             {
-                if (result.Errors.Any())
-                    return BadRequest(result);
+                if (createAccountResult.Errors.Any())
+                    return BadRequest(createAccountResult);
 
-                return Problem(
-                    statusCode: (int)HttpStatusCode.InternalServerError,
-                    detail: "Erro ao criar o usuário.");
+                return StatusCode(
+                    statusCode: (int)(HttpStatusCode.InternalServerError),
+                    value: new GetErrorResponseDTO(HttpStatusCode.InternalServerError, "Erro ao criar o usuário."));
             }
 
-            return Ok(myNewAccount);
+            var token = await _tokenService.GenerateTokenAsync(myNewAccount.UserName);
+            var profilesDto = myProfiles.Select(x => new ProfileObjectDTO(x.Type)).ToList();
+
+            var result = new GetAccountResponseDTO(
+                token,
+                myNewAccount.PasswordHash,
+                myNewAccount.Name,
+                myNewAccount.Created,
+                myNewAccount.Modified,
+                myNewAccount.LastLogin,
+                profilesDto);
+            
+            return Ok(result);
         }
 
         [HttpGet("/account")]
