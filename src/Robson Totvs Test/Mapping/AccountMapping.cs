@@ -11,7 +11,7 @@ namespace Robson_Totvs_Test.Mapping
             builder.Property(x => x.LastLogin).IsRequired(false);
             builder.Property(x => x.Created).IsRequired();
             builder.Property(x => x.Modified).IsRequired(false);
-            builder.Property(x => x.LastLogin).IsRequired(false);
+            //_ = builder.Property(x => x.LastLogin).IsRequired();
             builder.Property(x => x.Name).HasMaxLength(128).IsRequired(true);
 
             builder.HasMany(x => x.Profiles).WithOne().HasForeignKey(x => x.AccountId);

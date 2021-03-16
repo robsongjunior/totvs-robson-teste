@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Robson_Totvs_Test.Controllers
 {
-    [Authorize]
+   
     [Route("[controller]")]
     public class ProfileObjectController : ControllerBase
     {

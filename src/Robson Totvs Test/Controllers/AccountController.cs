@@ -46,7 +46,7 @@ namespace Robson_Totvs_Test.Controllers
             if (existingUser != null)
                 return StatusCode(
                     statusCode: (int)HttpStatusCode.BadRequest,
-                    value: new GetErrorResponseDTO(HttpStatusCode.BadRequest, "Email já existe."));
+                    value: new GetErrorResponseDTO(HttpStatusCode.BadRequest, "This email already exists."));
 
             var myProfiles = request.Profiles.Select(x => new ProfileObject(x.Type, null)).ToList();
             var myNewAccount = new Account(request.Name, request.Email, myProfiles);
@@ -60,7 +60,7 @@ namespace Robson_Totvs_Test.Controllers
 
                 return StatusCode(
                     statusCode: (int)(HttpStatusCode.InternalServerError),
-                    value: new GetErrorResponseDTO(HttpStatusCode.InternalServerError, "Erro ao criar o usuário."));
+                    value: new GetErrorResponseDTO(HttpStatusCode.InternalServerError, "Error creating user."));
             }
 
             var token = await _tokenService.GenerateTokenAsync(myNewAccount.UserName);
