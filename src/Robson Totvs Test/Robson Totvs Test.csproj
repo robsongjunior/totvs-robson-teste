@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="EFCore.NamingConventions" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="5.0.4" />

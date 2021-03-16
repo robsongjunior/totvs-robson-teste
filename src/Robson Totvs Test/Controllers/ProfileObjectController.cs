@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Robson_Totvs_Test.Application.DTO.Models.Request;
 using Robson_Totvs_Test.Data.Repositories;
 using Robson_Totvs_Test.Domain.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Robson_Totvs_Test.Domain.Entities;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -9,6 +11,7 @@ namespace Robson_Totvs_Test.Data.Repositories
     public class ProfileObjectRepository : IProfileObjectRepository
     {
         private TotvsTestDbContext _ctx;
+
 
         public ProfileObjectRepository(TotvsTestDbContext ctx)
         {
@@ -32,6 +35,11 @@ namespace Robson_Totvs_Test.Data.Repositories
         public async Task<ProfileObject> FindAsync(Expression<Func<ProfileObject, bool>> filter)
         {
             return await _ctx.Profiles.FirstOrDefaultAsync(filter);
+        }
+
+        public async Task<ProfileObject[]> FindAllAsyncWithDapperAsync(string sqlCommand)
+        {
+            return (await _ctx.Database.GetDbConnection().QueryAsync<ProfileObject>(sqlCommand)).AsList().ToArray();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
+using Robson_Totvs_Test.Application.DTO.Models.Request;
 using Robson_Totvs_Test.Domain.Entities;
 using System;
 using System.Linq;
@@ -19,9 +21,9 @@ namespace Robson_Totvs_Test.Data.Repositories
         public async Task<bool> AddAsync(Account newObj)
         {
             _ctx.Users.Add(newObj);
-            
+
             var success = await this._ctx.SaveChangesAsync() > 0;
-            
+
             return success;
         }
 
@@ -37,6 +39,13 @@ namespace Robson_Totvs_Test.Data.Repositories
             return await this._ctx.Users.Where(filter)
                 .Include(x => x.Profiles)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<Account[]> FindAllAsyncWithDapperAsync(string sqlCommand)
+        {
+            
+
+            return (await _ctx.Database.GetDbConnection().QueryAsync<Account>(sqlCommand)).AsList().ToArray();
         }
     }
 }
