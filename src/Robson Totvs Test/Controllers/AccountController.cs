@@ -25,9 +25,9 @@ namespace Robson_Totvs_Test.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] [FromForm] [FromQuery] [Required] CreateAccountDTO request)
+        public async Task<IActionResult> Register([FromBody][FromForm][FromQuery][Required] CreateAccountDTO request)
         {
-            if (ModelState.IsValid == false) 
+            if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
@@ -35,7 +35,7 @@ namespace Robson_Totvs_Test.Controllers
             if (existingUser != null)
                 return BadRequest("Email já existe.");
 
-            var myProfiles = request.Profiles.Select(x => new ProfileObject(x.Type)).ToList();
+            var myProfiles = request.Profiles.Select(x => new ProfileObject(x.Type, null)).ToList();
             var myNewAccount = new Account(request.Name, request.Email, myProfiles);
 
             var result = await this._userManager.CreateAsync(myNewAccount, request.Password);

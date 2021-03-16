@@ -7,6 +7,8 @@ namespace Robson_Totvs_Test.Data
 {
     public class TotvsTestDbContext : IdentityDbContext<Account>
     {
+        public DbSet<ProfileObject> Profiles { get; set; }
+
         public TotvsTestDbContext(DbContextOptions<TotvsTestDbContext> options)
             : base(options)
         {

@@ -11,6 +11,7 @@ using Newtonsoft.Json.Serialization;
 using Robson_Totvs_Test.Configuration;
 using Robson_Totvs_Test.Configuration.TokenService;
 using Robson_Totvs_Test.Data;
+using Robson_Totvs_Test.Data.Repositories;
 using Robson_Totvs_Test.Domain.Entities;
 
 namespace Robson_Totvs_Test
@@ -43,6 +44,8 @@ namespace Robson_Totvs_Test
         private void ConfigureDependencyInjections(IServiceCollection services)
         {
             services.AddScoped<ITotvsTokenService, TotvsTokenService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IProfileObjectRepository, ProfileObjectRepository>();
         }
 
         private void ConfigureHttpPostNameToLowerCase(IServiceCollection services)

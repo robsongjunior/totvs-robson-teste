@@ -10,6 +10,8 @@ namespace Robson_Totvs_Test.Mapping
         {
             builder.Property(x => x.AccountId).IsRequired();
             builder.Property(x => x.Type).IsRequired();
+
+            builder.ToTable("tb_profiles");
         }
     }
 }

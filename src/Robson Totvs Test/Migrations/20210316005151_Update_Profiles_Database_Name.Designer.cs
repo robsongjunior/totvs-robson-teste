@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Robson_Totvs_Test.Data;
@@ -9,9 +10,10 @@ using Robson_Totvs_Test.Data;
 namespace Robson_Totvs_Test.Migrations
 {
     [DbContext(typeof(TotvsTestDbContext))]
-    partial class TotvsTestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210316005151_Update_Profiles_Database_Name")]
+    partial class Update_Profiles_Database_Name
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

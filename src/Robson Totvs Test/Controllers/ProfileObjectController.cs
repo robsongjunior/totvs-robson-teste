@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Robson_Totvs_Test.Application.DTO.Models.Request;
+using Robson_Totvs_Test.Data.Repositories;
 using Robson_Totvs_Test.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,18 @@ namespace Robson_Totvs_Test.Controllers
     [Route("[controller]")]
     public class ProfileObjectController : ControllerBase
     {
-
-        UserManager<Account> _userManager;
+        IAccountRepository _accountRepository;
+        IProfileObjectRepository _profileObjectRepository;
 
         public ProfileObjectController(
-            UserManager<Account> userManager
-            )
+            IAccountRepository accountRepository,
+            IProfileObjectRepository profileObjectRepository)
         {
-            this._userManager = userManager;
+            _accountRepository = accountRepository;
+            _profileObjectRepository = profileObjectRepository;
         }
 
         [HttpPost("/account/{userId}/profile-object")]
-
         public async Task<IActionResult> RegisterProfile([FromRoute][Required] string userId, [FromBody][Required] CreateObjectProfileRequestDTO request)
         {
             if (ModelState.IsValid == false)
@@ -33,29 +34,27 @@ namespace Robson_Totvs_Test.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _accountRepository.FindAsync(x => x.Id == userId);
+
             if (user == null)
             {
                 return NotFound("User not found with the resquested id");
-
             }
-            var myNewProfile = new ProfileObject(request.Type);
-            user.Profiles.Add(myNewProfile);
-
-            var updateUserResult = await _userManager.UpdateAsync(user);
-
-            if (updateUserResult.Succeeded == false)
+            else if(user.Profiles.Any(x=>x.Type == request.Type))
             {
+                return BadRequest("Profile type must be unique");
+            }
 
-                var myError = updateUserResult.Errors.FirstOrDefault();
+            var myNewProfile = new ProfileObject(request.Type, user.Id);
+            
+            var success = await _profileObjectRepository.AddAsync(myNewProfile);
 
-                return Problem(statusCode: (int)HttpStatusCode.InternalServerError, detail: myError.Description);
-
+            if (success == false)
+            {
+                return Problem(statusCode: (int)HttpStatusCode.InternalServerError, detail: "Error while saving profile-object on database");
             }
 
             return Ok(myNewProfile);
-
         }
-
     }
 }

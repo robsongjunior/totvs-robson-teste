@@ -5,9 +5,14 @@ namespace Robson_Totvs_Test.Domain.Entities
 {
     public class ProfileObject
     {
-        public ProfileObject(ProfileType type)
+        public ProfileObject()
+        {
+
+        }
+        public ProfileObject(ProfileType type, string userId)
         {
             this.Type = type;
+            this.AccountId = userId;
         }
 
         public Guid Id { get; set; }
