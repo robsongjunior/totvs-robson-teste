@@ -55,8 +55,8 @@ namespace Robson_Totvs_Test
                 var settings = options.SerializerSettings;
                 settings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
                 settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                settings.NullValueHandling = NullValueHandling.Ignore;
-                settings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                settings.NullValueHandling = NullValueHandling.Include;
+                settings.DefaultValueHandling = DefaultValueHandling.Include;
                 settings.Formatting = Formatting.Indented;
             });
         }
