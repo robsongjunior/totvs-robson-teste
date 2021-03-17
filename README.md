@@ -1,4 +1,4 @@
-# Teste para desenvolvedor júnior <h1>
+# Teste para desenvolvedor junior <h1>
 ## Solicitações do teste<h2>:heavy_check_mark:
   
 ###### Cadastro de Usuários<h6>:heavy_check_mark:
