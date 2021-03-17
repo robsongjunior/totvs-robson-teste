@@ -1,5 +1,5 @@
-# Teste para desenvolvedor júnior <h1> tag
-## Solicitações do teste <h2> tag :heavy_check_mark:
+# Teste para desenvolvedor júnior <h1>
+## Solicitações do teste <h2> :heavy_check_mark:
   
 ###### Cadastro de Usuários <h6> tag
 Crie uma aplicação que exponha uma API RESTful de criação de usuários e login.
