@@ -44,8 +44,7 @@ o	profiles: lista de objetos perfil relacionados ao usuário;
   
 ## Execução <h2>
   
-  1. Com o SGBD instalado, crie obanco de dados, usuário e senha de acordo com a ConnectionStrings abaixo, e aplique ao usuário criado a permissão de acesso ao banco.
-  > "Server=localhost;Database=totvstestdb;Integrated Security=true;Pooling=true;User Id=totvstest;Password=abc123"
+  1. Com o SGBD instalado, crie obanco de dados, usuário e senha de acordo com a ConnectionStrings no appsettings.Development.json, e aplique ao usuário criado a permissão de acesso ao banco.
     
   2. Execute o comando update-database via console.
   
