@@ -36,7 +36,7 @@ o	profiles: lista de objetos perfil relacionados ao usuário;
   
 ## Versões <h2>
   
-  1.Postgres 13.2 · 2021-02-11
+  1. Postgres 13.2 · 2021-02-11
   
   2. .Net 5
   
