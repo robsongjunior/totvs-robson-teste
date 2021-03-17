@@ -1,7 +1,7 @@
 # Teste para desenvolvedor júnior <h1>
-## Solicitações do teste <h2> :heavy_check_mark:
+## Solicitações do teste<h2>:heavy_check_mark:
   
-###### Cadastro de Usuários <h6> :heavy_check_mark:
+###### Cadastro de Usuários<h6>:heavy_check_mark:
 Crie uma aplicação que exponha uma API RESTful de criação de usuários e login.
 Todos os endpoints devem aceitar e responder somente JSON, inclusive ao responder mensagens de erro.
 Todas as mensagens de erro devem ter o formato:
