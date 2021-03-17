@@ -50,3 +50,10 @@ o	profiles: lista de objetos perfil relacionados ao usuário;
   
   3. Execute a aplicação via Docker ou IIS.
   
+ ## Agradecimentos <h2> :joy::joy::joy::joy::joy::joy:
+  
+  1. Google:joy:
+  2. Stack Overflow:joy:
+  3. docs.Microsoft:joy:
+  4. Repositórios do GitHub:joy:
+  5. Entre outros :joy:
