@@ -37,7 +37,9 @@ o	profiles: lista de objetos perfil relacionados ao usuário;
 ## Versões <h2>
   
   1.Postgres 13.2 · 2021-02-11
+  
   2. .Net 5
+  
   3. Visual Studio 2019
   
 ## Execução <h2>
@@ -45,6 +47,7 @@ o	profiles: lista de objetos perfil relacionados ao usuário;
   1. Com o SGBD instalado, crie obanco de dados, usuário e senha de acordo com a ConnectionStrings abaixo, e aplique ao usuário criado a permissão de acesso ao banco.
   "ConnectionStrings": {
     "TotvsConnection": "Server=localhost;Database=totvstestdb;Integrated Security=true;Pooling=true;User Id=totvstest;Password=abc123"
+    
   2. Execute o comando update-database via console.
   
   3. Execute a aplicação via Docker ou IIS.
