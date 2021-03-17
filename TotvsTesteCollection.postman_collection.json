@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "21db78b0-b521-481e-8913-6454db6f4df5",
+		"name": "TotvsTesteCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Account",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"robson\",\r\n  \"email\": \"robson6@gmail.com\",\r\n  \"password\": \"852456Ro@\",\r\n  \"profiles\": [\r\n    {\r\n      \"type\": 0\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44392/account",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44392",
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"robson6@gmail.com\",\r\n  \"password\": \"852456Ro@\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44392/auth/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44392",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionando perfil",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44392/account/d2c89ef5-4f89-4e33-b7e4-9b50c324f071/profile-object",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44392",
+					"path": [
+						"account",
+						"d2c89ef5-4f89-4e33-b7e4-9b50c324f071",
+						"profile-object"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar usuários",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2MTU5MzY5MDgsImV4cCI6MTYxNjAyMzMwOCwiaWF0IjoxNjE1OTM2OTA4LCJpc3MiOiJ0b3R2dXN0ZXN0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.84r6Ef8Rpoxit0FgNtOdn1hMfbzvjx7xyXZgaS2npbw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44392/account?type=doctor",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44392",
+					"path": [
+						"account"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "doctor"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

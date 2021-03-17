@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Robson_Totvs_Test.Application.DTO.Models.Request;
 using Robson_Totvs_Test.Application.DTO.Models.Response;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Robson_Totvs_Test.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
@@ -27,6 +29,7 @@ namespace Robson_Totvs_Test.Controllers
         }
 
         [HttpPost("/auth/login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] CreateLoginRequestDTO request)
         {
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
@@ -42,6 +45,11 @@ namespace Robson_Totvs_Test.Controllers
                     value: new GetErrorResponseDTO(HttpStatusCode.Unauthorized, "Invalid username/password"));
 
             var myToken = await _tokenService.GenerateTokenAsync(existingUser.UserName);
+
+
+            existingUser.LastLogin = System.DateTime.Now;
+
+            await _userManager.UpdateAsync(existingUser);
 
             return Ok(myToken);
         }

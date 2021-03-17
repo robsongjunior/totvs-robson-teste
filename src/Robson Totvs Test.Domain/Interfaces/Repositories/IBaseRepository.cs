@@ -10,5 +10,6 @@ namespace Robson_Totvs_Test.Domain.Interfaces.Repositories
         Task<T[]> FindAllAsync(Expression<Func<T, bool>> filter);
         Task<T[]> FindAllAsyncWithDapperAsync(string sqlCommand);
         Task<bool> AddAsync(T newObj);
+        Task<bool> CommitAsync();
     }
 }

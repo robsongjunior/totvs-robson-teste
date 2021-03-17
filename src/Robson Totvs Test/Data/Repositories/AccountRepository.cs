@@ -47,5 +47,11 @@ namespace Robson_Totvs_Test.Data.Repositories
 
             return (await _ctx.Database.GetDbConnection().QueryAsync<Account>(sqlCommand)).AsList().ToArray();
         }
+
+        public async Task<bool> CommitAsync() {
+
+            return await this._ctx.SaveChangesAsync() > 0;
+
+        }
     }
 }

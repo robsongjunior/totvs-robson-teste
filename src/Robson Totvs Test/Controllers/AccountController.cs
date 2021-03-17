@@ -79,7 +79,6 @@ namespace Robson_Totvs_Test.Controllers
         }
 
         [HttpGet("/account")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] GetAccountFilterDTO request)
         {
             if (ModelState.IsValid == false)

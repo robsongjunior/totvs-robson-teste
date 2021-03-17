@@ -20,10 +20,10 @@ namespace Robson_Totvs_Test.Domain.Entities
             this.UserName = this.Email = email;
         }
 
-        public string Name { get; private set; }
-        public DateTime Created { get; private set; }
-        public DateTime? Modified { get; private set; }
-        public DateTime? LastLogin { get; private set; }
-        public List<ProfileObject> Profiles { get; private set; }
+        public string Name { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime? Modified { get; set; }
+        public DateTime? LastLogin { get; set; }
+        public List<ProfileObject> Profiles { get; set; }
     }
 }

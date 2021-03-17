@@ -4,6 +4,7 @@ using Robson_Totvs_Test.Application.DTO.Models.Common;
 using Robson_Totvs_Test.Application.DTO.Models.Response;
 using Robson_Totvs_Test.Domain.Entities;
 using Robson_Totvs_Test.Domain.Interfaces.Repositories;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -11,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Robson_Totvs_Test.Controllers
 {
-   
+
     [Route("[controller]")]
     public class ProfileObjectController : ControllerBase
     {
-        IAccountRepository _accountRepository;
-        IProfileObjectRepository _profileObjectRepository;
+        private IAccountRepository _accountRepository;
+        private IProfileObjectRepository _profileObjectRepository;
 
         public ProfileObjectController(
             IAccountRepository accountRepository,
@@ -42,7 +43,7 @@ namespace Robson_Totvs_Test.Controllers
                     statusCode: (int)HttpStatusCode.NotFound,
                     value: new GetErrorResponseDTO(HttpStatusCode.NotFound, "User not found with the resquested id."));
             }
-            else if(user.Profiles.Any(x=>x.Type == request.Type))
+            else if (user.Profiles.Any(x => x.Type == request.Type))
             {
                 return StatusCode(
                     statusCode: (int)HttpStatusCode.BadRequest,
@@ -50,7 +51,8 @@ namespace Robson_Totvs_Test.Controllers
             }
 
             var myNewProfile = new ProfileObject(request.Type, user.Id);
-            
+            user.Profiles.Add(myNewProfile);
+
             var success = await _profileObjectRepository.AddAsync(myNewProfile);
 
             if (success == false)
@@ -60,7 +62,21 @@ namespace Robson_Totvs_Test.Controllers
                     value: new GetErrorResponseDTO(HttpStatusCode.InternalServerError, "Error while saving profile-object on database"));
             }
 
-            return Ok(myNewProfile);
+            user.Modified = DateTime.Now;
+            await _accountRepository.CommitAsync();
+
+            var profilesDto = user.Profiles.Select(x => new ProfileObjectDTO(x.Type)).ToList();
+
+            var result = new GetAccountResponseDTO(
+                null,
+                user.PasswordHash,
+                user.Name,
+                user.Created,
+                user.Modified,
+                user.LastLogin,
+                profilesDto);
+
+            return Ok(result);
         }
     }
 }
